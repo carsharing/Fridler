@@ -15,6 +15,7 @@ xcodebuild \
   -destination 'generic/platform=iOS' \
   -derivedDataPath "$OUT/DerivedData" \
   -quiet \
+  CURRENT_PROJECT_VERSION="${GITHUB_RUN_NUMBER:-1}" \
   CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" \
   build
 
@@ -46,4 +47,4 @@ cp -R "$APP" "$OUT/Payload/"
 rm -rf "$OUT/Payload"
 
 echo "Built $OUT/Fridler.ipa ($(du -h "$OUT/Fridler.ipa" | cut -f1))"
-/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP/Info.plist" | sed 's/^/Version: /'
+echo "Version: $(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP/Info.plist") ($(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$APP/Info.plist"))"

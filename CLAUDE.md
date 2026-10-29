@@ -14,4 +14,5 @@ the workflow logs.
   sizes as multiples of `SceneLayout.unit`.
 - Widgets only support buttons: in-widget doodling is tap-based (App Intents).
 - Ship a version: bump `MARKETING_VERSION` in `project.yml`, add a CHANGELOG
-  section, update ROADMAP status, push to `main`, then tag `vX.Y.Z`.
+  section, update ROADMAP status, push to `main`. CI tags `vX.Y.Z` and
+  publishes the release when tests pass (tag pushes from sessions are blocked).

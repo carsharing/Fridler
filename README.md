@@ -42,7 +42,8 @@ fridge**, tap **Copy report** and paste it in an issue.
 Every push to `main` builds an unsigned IPA (uploaded as a workflow artifact),
 runs the tests and force-pushes the rendered pictures to the
 [`snapshots`](https://github.com/carsharing/Fridler/tree/snapshots) branch.
-Pushing a `v*` tag also publishes a GitHub release with the IPA.
+When `MARKETING_VERSION` in `project.yml` is a version with no release yet,
+CI tags it and publishes a GitHub release with the IPA.
 
 ### Sideloading details
 

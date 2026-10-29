@@ -3,7 +3,6 @@ name: Build
 on:
   push:
     branches: [main]
-    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -59,12 +58,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: scripts/publish-snapshots.sh
 
-      - name: Release
-        if: startsWith(github.ref, 'refs/tags/v')
+      # A version in project.yml without a release yet gets tagged and
+      # released from this commit. Bumping MARKETING_VERSION ships it.
+      - name: Release new version
+        if: github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          scripts/release-notes.sh "$GITHUB_REF_NAME" > build/release-notes.md
-          gh release create "$GITHUB_REF_NAME" build/Fridler.ipa \
-            --title "Fridler $GITHUB_REF_NAME" \
+          VERSION="v$(scripts/version.sh)"
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            echo "$VERSION is already released"
+            exit 0
+          fi
+          scripts/release-notes.sh "$VERSION" > build/release-notes.md
+          gh release create "$VERSION" build/Fridler.ipa \
+            --target "$GITHUB_SHA" \
+            --title "Fridler $VERSION" \
             --notes-file build/release-notes.md
