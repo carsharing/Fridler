@@ -4,7 +4,7 @@ iOS app + WidgetKit widget, sideloaded with AltStore (free Apple ID). There is
 no Mac here: CI on GitHub Actions (`macos-26`) is the compiler. Push, then read
 the workflow logs.
 
-- `project.yml` (XcodeGen) is the project; the `.xcodeproj` and Info.plists are generated.
+- `project.yml` (XcodeGen) is the project; the `.xcodeproj`, Info.plists and entitlements are generated from it (XcodeGen overwrites entitlement files, so the App Group lives in `project.yml`).
 - Shared code lives in `Shared/` and is compiled into both the app and the widget.
 - Additive-only: new `FridgeDoc` fields get defaults and are decoded with
   `c.value(_:default:)`; never rename or remove fields or enum raw values.

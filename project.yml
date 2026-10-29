@@ -44,6 +44,9 @@ targets:
         ITSAppUsesNonExemptEncryption: false
     entitlements:
       path: App/Fridler.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.io.github.carsharing.fridler
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.carsharing.fridler
@@ -68,6 +71,9 @@ targets:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
       path: Widget/FridlerWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.io.github.carsharing.fridler
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.carsharing.fridler.widget

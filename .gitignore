@@ -2,6 +2,8 @@
 *.xcodeproj
 App/Info.plist
 Widget/Info.plist
+App/Fridler.entitlements
+Widget/FridlerWidget.entitlements
 
 # Build output
 build/
