@@ -31,7 +31,9 @@ codesign --force --sign - --timestamp=none --entitlements Widget/FridlerWidget.e
 codesign --force --sign - --timestamp=none --entitlements App/Fridler.entitlements "$APP"
 
 for bundle in "$APPEX" "$APP"; do
-  entitlements=$(codesign -d --entitlements - "$bundle" 2>/dev/null || true)
+  entitlements=$(codesign -d --entitlements - --xml "$bundle" 2>&1 || true)
+  echo "Entitlements of $(basename "$bundle"):"
+  echo "$entitlements"
   if [[ "$entitlements" != *"$GROUP"* ]]; then
     echo "::error::$bundle does not declare $GROUP"
     exit 1
