@@ -1,0 +1,97 @@
+# XcodeGen spec. CI turns this into Fridler.xcodeproj; nobody edits the
+# Xcode project by hand (and it is not committed).
+name: Fridler
+
+options:
+  bundleIdPrefix: io.github.carsharing
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+
+settings:
+  base:
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    CODE_SIGN_STYLE: Manual
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  Fridler:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Shared
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Fridler
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        CFBundleURLTypes:
+          - CFBundleURLName: io.github.carsharing.fridler
+            CFBundleURLSchemes:
+              - fridler
+        ITSAppUsesNonExemptEncryption: false
+    entitlements:
+      path: App/Fridler.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.carsharing.fridler
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    dependencies:
+      - target: FridlerWidget
+
+  FridlerWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+      - path: Shared
+    info:
+      path: Widget/Info.plist
+      properties:
+        CFBundleDisplayName: Fridler
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Widget/FridlerWidget.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.carsharing.fridler.widget
+
+  FridlerTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: Fridler
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.carsharing.fridler.tests
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/Fridler.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Fridler
+        BUNDLE_LOADER: $(TEST_HOST)
+
+schemes:
+  Fridler:
+    build:
+      targets:
+        Fridler: all
+        FridlerTests: [test]
+    test:
+      config: Debug
+      targets:
+        - FridlerTests
