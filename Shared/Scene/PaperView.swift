@@ -41,7 +41,8 @@ struct PaperView: View {
         } else {
             VStack(spacing: 2 * unit) {
                 doodle
-                note
+                // Keeps long notes clear of the folded corner.
+                note.padding(.horizontal, 2 * unit)
             }
         }
     }

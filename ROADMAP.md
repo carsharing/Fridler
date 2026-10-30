@@ -45,7 +45,7 @@ free Apple ID. Nobody needs Xcode.
 | Version | What you get | Status |
 |---|---|---|
 | **v0.1 Hello Fridge** | Widget (small/medium/large): fridge door, paper, pizza magnet, sample doodle, your note. Six fridge colors. Clear-mode support (full-color picture, or paper on glass). Diagnostics screen. CI builds the IPA and renders pictures. | ✅ released |
-| **v0.2 Draw in the app** | Marker canvas: four colors, three tip sizes, stroke eraser, undo/redo, wipe. Saving hangs it on the fridge. Tapping the widget opens the drawing. | 🛠 building |
+| **v0.2 Draw in the app** | Marker canvas: four colors, three tip sizes, stroke eraser, undo/redo, wipe. Saving hangs it on the fridge. Tapping the widget opens the drawing. | ✅ released |
 | **v0.3 Tap-doodle on the widget** | Chunky pixel grid on the paper: tap to paint, crayon picker, eraser, clear. Option: same paper as the app drawing or its own. | next |
 | **v0.4 Magnet roulette** | 12+ magnets (wordplay, serious-for-silly, food, imaginary souvenirs). Tap the magnet to swap; it also changes every few hours. | |
 | **v0.5 Papers & pens** | Notebook page, graph paper, sticky note, crayon on kraft, chalkboard, napkin + ballpoint, receipt, blueprint, fogged mirror, sand, cake icing, plaster cast… each with its own pen. | |

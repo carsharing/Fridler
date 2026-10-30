@@ -10,6 +10,7 @@
 - The app preview can show what the widget looks like on a Clear home
   screen, and the Clear/Tinted option now explains when it applies.
 - "Widget last drew" in Behind the fridge now updates while the app is open.
+- Long notes no longer run under the paper's folded corner.
 
 ## [0.1.0] Hello Fridge
 
