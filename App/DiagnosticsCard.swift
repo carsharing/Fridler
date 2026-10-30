@@ -6,6 +6,7 @@ import WidgetKit
 /// is the part sideloading is most likely to break.
 struct DiagnosticsCard: View {
     @EnvironmentObject private var model: FridgeModel
+    @Environment(\.scenePhase) private var scenePhase
     @State private var heartbeat: FridgeStore.WidgetHeartbeat?
     @State private var copied = false
 
@@ -39,6 +40,16 @@ struct DiagnosticsCard: View {
             .font(.callout.weight(.semibold))
         }
         .onAppear { refresh() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { refresh() }
+        }
+        .onChange(of: model.lastSaved) { _, _ in
+            // The widget redraws a moment after each save.
+            Task {
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+                refresh()
+            }
+        }
     }
 
     private func refresh() {

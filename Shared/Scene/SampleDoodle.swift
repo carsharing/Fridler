@@ -34,6 +34,15 @@ struct SketchSpace {
         CGPoint(x: origin.x + x * scale, y: origin.y + y * scale)
     }
 
+    /// The inverse: a point in `rect` to sketch-box units, clamped to the box.
+    func boxPoint(_ point: CGPoint) -> CGPoint {
+        guard scale > 0 else { return .zero }
+        return CGPoint(
+            x: min(max((point.x - origin.x) / scale, 0), Self.box.width),
+            y: min(max((point.y - origin.y) / scale, 0), Self.box.height)
+        )
+    }
+
     func circle(_ x: CGFloat, _ y: CGFloat, r: CGFloat) -> CGRect {
         CGRect(x: origin.x + (x - r) * scale, y: origin.y + (y - r) * scale, width: 2 * r * scale, height: 2 * r * scale)
     }

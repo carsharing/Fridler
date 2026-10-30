@@ -10,7 +10,11 @@ struct FridlerApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(model)
-                .onOpenURL { _ in model.reload() }
+                .onOpenURL { url in
+                    model.reload()
+                    // The widget opens fridler://draw.
+                    if url.host == "draw" { model.isDrawing = true }
+                }
         }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
@@ -31,6 +35,7 @@ final class FridgeModel: ObservableObject {
             if doc != oldValue && !isReloading { scheduleSave() }
         }
     }
+    @Published var isDrawing = false
     @Published private(set) var lastSaved: Date?
     @Published private(set) var lastSaveFailed = false
 

@@ -44,6 +44,44 @@ final class SceneSnapshotTests: XCTestCase {
         )
     }
 
+    // MARK: v0.2
+
+    @MainActor
+    func testDrawingAtEverySize() {
+        var doc = FridgeDoc()
+        doc.drawing = TestDrawings.cat
+        doc.note = "meow"
+        for size in WidgetSize.allCases {
+            Snapshot.check(FridgeScene(doc: doc), size: size.size, named: "v0.2-drawing-\(size.rawValue)")
+        }
+    }
+
+    @MainActor
+    func testWipedPaperKeepsTheNote() {
+        var doc = FridgeDoc()
+        doc.drawing = Drawing()
+        doc.note = "nothing to see here"
+        Snapshot.check(FridgeScene(doc: doc), size: WidgetSize.large.size, named: "v0.2-wiped-large")
+    }
+
+    @MainActor
+    func testDrawingScreen() {
+        let editor = DrawingEditor(drawing: TestDrawings.cat)
+        editor.ink = .blue
+        Snapshot.check(
+            ZStack {
+                FridgeDoorView(color: .mint)
+                VStack(spacing: 18) {
+                    DrawingBoard(editor: editor)
+                    ToolTray(editor: editor) {}
+                }
+                .padding(16)
+            },
+            size: CGSize(width: 390, height: 560),
+            named: "v0.2-drawing-screen"
+        )
+    }
+
     @MainActor
     func testRendererMakesFullColorPicture() {
         let picture = SceneRenderer.image(doc: FridgeDoc(), size: WidgetSize.small.size, showsDoor: true)

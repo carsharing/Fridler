@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var model: FridgeModel
     @State private var previewSize: WidgetSize = .large
+    @State private var previewClear = false
 
     var body: some View {
         ZStack {
@@ -12,6 +13,7 @@ struct HomeView: View {
                 VStack(spacing: 20) {
                     header
                     previewCard
+                    drawCard
                     noteCard
                     colorCard
                     clearModeCard
@@ -25,6 +27,9 @@ struct HomeView: View {
             }
         }
         .preferredColorScheme(.light)
+        .fullScreenCover(isPresented: $model.isDrawing) {
+            DrawView(model: model)
+        }
     }
 
     /// Text drawn straight on the door.
@@ -51,16 +56,45 @@ struct HomeView: View {
             .pickerStyle(.segmented)
 
             let size = previewSize.size
-            FridgeScene(doc: model.doc)
-                .aspectRatio(size.width / size.height, contentMode: .fit)
-                .frame(maxWidth: size.width)
-                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .stroke(Palette.ink, lineWidth: 2.5)
-                )
-                .frame(maxWidth: .infinity)
-                .animation(.spring(duration: 0.35), value: previewSize)
+            let widgetShape = RoundedRectangle(cornerRadius: 22, style: .continuous)
+            ZStack {
+                if previewClear {
+                    LinearGradient(
+                        colors: [Color(hex: 0x8FB3E0), Color(hex: 0x6E7F55)],
+                        startPoint: .top, endPoint: .bottom
+                    )
+                    widgetShape.fill(.ultraThinMaterial)
+                }
+                FridgeScene(doc: model.doc, showsDoor: !previewClear || model.doc.clearModeStyle == .fridgeDoor)
+            }
+            .aspectRatio(size.width / size.height, contentMode: .fit)
+            .frame(maxWidth: size.width)
+            .clipShape(widgetShape)
+            .overlay(widgetShape.stroke(Palette.ink, lineWidth: 2.5))
+            .frame(maxWidth: .infinity)
+            .animation(.spring(duration: 0.35), value: previewSize)
+
+            Toggle("Preview a Clear home screen", isOn: $previewClear.animation())
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(Palette.ink)
+                .tint(Palette.markerRed)
+        }
+    }
+
+    private var drawCard: some View {
+        CartoonCard(title: "Draw on the paper") {
+            Button {
+                model.isDrawing = true
+            } label: {
+                Label("Grab a marker", systemImage: "pencil.tip")
+                    .font(.system(size: 19, weight: .heavy, design: .rounded))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+            }
+            .buttonStyle(CartoonButtonStyle(fill: Palette.markerRed, text: Palette.paper))
+            Text("Tip: tapping the widget opens the paper straight away.")
+                .font(.footnote)
+                .foregroundStyle(Palette.ink.opacity(0.6))
         }
     }
 
@@ -77,9 +111,6 @@ struct HomeView: View {
                         model.doc.note = String(note.prefix(FridgeDoc.noteLimit))
                     }
                 }
-            Text("Freehand drawing arrives in v0.2.")
-                .font(.footnote)
-                .foregroundStyle(Palette.ink.opacity(0.6))
         }
     }
 
@@ -123,7 +154,7 @@ struct HomeView: View {
                 }
             }
             .pickerStyle(.segmented)
-            Text("What the widget shows when your home screen icons are set to Clear or Tinted.")
+            Text("Only used when your home screen is set to Clear or Tinted (long-press the home screen → Edit → Customize). With the default look, the fridge door always shows. Use the preview toggle above to see both.")
                 .font(.footnote)
                 .foregroundStyle(Palette.ink.opacity(0.6))
         }

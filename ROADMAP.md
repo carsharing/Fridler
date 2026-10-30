@@ -22,7 +22,7 @@ free Apple ID. Nobody needs Xcode.
 
 | Topic | Decision |
 |---|---|
-| Phone | iOS 27.2, home screen in **Clear** mode. App targets iOS 18+. |
+| Phone | iOS 27.2. App targets iOS 18+. Clear/Tinted home screens supported. |
 | AltStore | One free app slot left: Fridler takes it (app + widget = 2 App IDs). |
 | Repo | `carsharing/Fridler`, public. Versions pushed straight to `main`. |
 | Name / language | Fridler, English. |
@@ -31,7 +31,7 @@ free Apple ID. Nobody needs Xcode.
 | App drawing vs widget taps | Also an option: same paper or separate. |
 | Pixel grid | Chunky. |
 | Fridge door | User picks the color. |
-| Style | Flat cartoon everywhere (thick outlines, flat colors, hard shadows). |
+| Style | Flat cartoon everywhere (thick outlines, flat colors, hard shadows). More "bulbous" wanted: references to come. |
 | Papers & mediums | As many as possible, including the odd ones (fogged mirror, sand, cake icing, plaster cast, receipt, blueprint…). |
 | Magnets | Change on tap and every few hours. Wacky: dumb wordplay, very serious-looking magnets for silly things, food. Souvenirs from imaginary places. |
 | Mazes | Easy, and they change. |
@@ -44,9 +44,9 @@ free Apple ID. Nobody needs Xcode.
 
 | Version | What you get | Status |
 |---|---|---|
-| **v0.1 Hello Fridge** | Widget (small/medium/large): fridge door, paper, pizza magnet, sample doodle, your note. Six fridge colors. Clear-mode support (full-color picture, or paper on glass). Diagnostics screen. CI builds the IPA and renders pictures. | ✅ built |
-| **v0.2 Draw in the app** | Whiteboard + black marker canvas (undo, erase, clear). Saving hangs it on the fridge. Tapping the widget opens the drawing. | next |
-| **v0.3 Tap-doodle on the widget** | Chunky pixel grid on the paper: tap to paint, crayon picker, eraser, clear. Option: same paper as the app drawing or its own. | |
+| **v0.1 Hello Fridge** | Widget (small/medium/large): fridge door, paper, pizza magnet, sample doodle, your note. Six fridge colors. Clear-mode support (full-color picture, or paper on glass). Diagnostics screen. CI builds the IPA and renders pictures. | ✅ released |
+| **v0.2 Draw in the app** | Marker canvas: four colors, three tip sizes, stroke eraser, undo/redo, wipe. Saving hangs it on the fridge. Tapping the widget opens the drawing. | 🛠 building |
+| **v0.3 Tap-doodle on the widget** | Chunky pixel grid on the paper: tap to paint, crayon picker, eraser, clear. Option: same paper as the app drawing or its own. | next |
 | **v0.4 Magnet roulette** | 12+ magnets (wordplay, serious-for-silly, food, imaginary souvenirs). Tap the magnet to swap; it also changes every few hours. | |
 | **v0.5 Papers & pens** | Notebook page, graph paper, sticky note, crayon on kraft, chalkboard, napkin + ballpoint, receipt, blueprint, fogged mirror, sand, cake icing, plaster cast… each with its own pen. | |
 | **v0.6 Fill-in pages** | Easy changing mazes (arrow buttons, trail drawn), coloring pages (tap to fill), connect-the-dots. | |

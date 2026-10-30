@@ -14,13 +14,16 @@ struct FridgeDoc: Codable, Equatable {
     var magnet: MagnetKind = .pizza
     var clearModeStyle: ClearModeStyle = .fridgeDoor
     var updatedAt: Date = Date(timeIntervalSince1970: 0)
+    /// v0.2. `nil` until something is drawn: the paper shows the sample doodle.
+    var drawing: Drawing? = nil
 
     static let noteLimit = 60
 
     init() {}
 
-    enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey, CaseIterable {
         case schemaVersion, note, fridgeColor, magnet, clearModeStyle, updatedAt
+        case drawing
     }
 
     init(from decoder: Decoder) throws {
@@ -32,6 +35,7 @@ struct FridgeDoc: Codable, Equatable {
         magnet = c.value(.magnet, default: defaults.magnet)
         clearModeStyle = c.value(.clearModeStyle, default: defaults.clearModeStyle)
         updatedAt = c.value(.updatedAt, default: defaults.updatedAt)
+        drawing = c.value(.drawing, default: defaults.drawing)
     }
 }
 

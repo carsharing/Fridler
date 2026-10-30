@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0] Draw in the app
+
+- Draw on the paper with markers: black, red, blue and green, in three tip
+  sizes. An eraser that wipes whole strokes, undo/redo, and wipe-all.
+- Every finished stroke is hung on the fridge straight away; the widget
+  shows your drawing at every size. Until you draw, the sample doodle stays.
+- Tapping the widget opens the paper directly.
+- The app preview can show what the widget looks like on a Clear home
+  screen, and the Clear/Tinted option now explains when it applies.
+- "Widget last drew" in Behind the fridge now updates while the app is open.
+
 ## [0.1.0] Hello Fridge
 
 - Home screen widget in small, medium and large: a fridge door, a sheet of

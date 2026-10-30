@@ -39,6 +39,11 @@ final class FridgeStore {
             var merged = (try? Data(contentsOf: url)).flatMap {
                 try? JSONSerialization.jsonObject(with: $0) as? [String: Any]
             } ?? [:]
+            // Keys this version knows are always rewritten: an optional set
+            // back to nil must not come back from the old file.
+            for key in FridgeDoc.CodingKeys.allCases {
+                merged.removeValue(forKey: key.rawValue)
+            }
             if let fresh = try JSONSerialization.jsonObject(with: encoded) as? [String: Any] {
                 merged.merge(fresh) { _, new in new }
             }

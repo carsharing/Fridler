@@ -30,7 +30,7 @@ struct PaperView: View {
 
     @ViewBuilder
     private func content(wide: Bool) -> some View {
-        let doodle = SampleDoodle(lineWidth: max(1.2, 0.9 * unit))
+        let doodle = DoodleView(drawing: doc.drawing, sampleLineWidth: max(1.2, 0.9 * unit))
         if doc.note.isEmpty {
             doodle
         } else if wide {

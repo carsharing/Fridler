@@ -98,6 +98,6 @@ struct FridgeWidgetView: View {
         .containerBackground(for: .widget) {
             FridgeDoorView(color: entry.doc.fridgeColor)
         }
-        .widgetURL(URL(string: "fridler://fridge"))
+        .widgetURL(URL(string: "fridler://draw"))
     }
 }
